@@ -7,6 +7,25 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+if (!dir.exists("data")) dir.create("data")
+if (!dir.exists("data-raw")) dir.create("data-raw")
+```
+
+
+```{r load_packages, echo=FALSE}
+suppressPackageStartupMessages(library("dplyr"))
+library("tidyr")
+library("DataExplorer")
+library("ggridges")
+library("ggplot2")
+library("hrbrthemes")
+library("viridisLite")
+library("viridis")
+```
+
+```{r install_mitre, echo=FALSE}
+# devtools::install_github(repo = "motherhack3r/mitre", ref = "devel")
+library(mitre)
 ```
 
 # Introducción
@@ -35,14 +54,12 @@ Las siguientes preguntas suman 2 puntos, pudiendo conseguir un máximo de 10.
 
 # Data sets
 
-```{r load_packages}
-suppressPackageStartupMessages(library("dplyr"))
-library("tidyr")
-library("DataExplorer")
-library("ggridges")
-library("ggplot2")
-library("hrbrthemes")
-library("viridis")
+```{r mitre_download_feeds, cache=TRUE, echo=FALSE, warning=FALSE, results='hide'}
+mitre::updateRawData(verbose = FALSE)
+```
+
+```{r mitre_create_datasets, cache=TRUE, echo=FALSE, warning=FALSE, results='hide'}
+mitre.data <- mitre::getMitreNetwork(verbose = F)
 ```
 
 ## Incidentes
@@ -74,7 +91,7 @@ plot_correlation(incidents)
 Seems that Tactic and Industry values are interesting.
 Let's see industry distribution along time.
 
-```{r}
+```{r, warning=FALSE}
 # Ref: https://www.r-graph-gallery.com/294-basic-ridgeline-plot.html
 
 ggplot(incidents, aes(x = first_event_ts, y = industry, fill = industry)) +
@@ -86,7 +103,7 @@ ggplot(incidents, aes(x = first_event_ts, y = industry, fill = industry)) +
   
 The time series distribution is based on first event. We can calculate the duration of the incidents using containment time.
 
-```{r fig.width=8, fig.height=8}
+```{r fig.width=8, fig.height=8, warning=FALSE}
 # Ref: https://www.r-graph-gallery.com/320-the-basis-of-bubble-plot.html
 incidents <- incidents %>% mutate(duration = round(as.numeric(containment_ts - first_event_ts)/3600, 2))
 
@@ -109,7 +126,7 @@ incidents %>%
 __TODO__
 
 ```{r ds_cve}
-raw_cves <- ""
+raw_cves <- mitre.data$standards$cve
 ```
 
 ## CWE
@@ -117,7 +134,7 @@ raw_cves <- ""
 __TODO__
 
 ```{r ds_cwe}
-raw_cwes <- ""
+raw_cwes <- mitre.data$standards$cwe
 ```
 
 ## ATT&CK
@@ -125,6 +142,7 @@ raw_cwes <- ""
 __TODO__
 
 ```{r ds_attck}
+raw_attck <- mitre.data$standards$attck
 ```
 
 ## SHIELD
@@ -132,6 +150,7 @@ __TODO__
 __TODO__
 
 ```{r ds_shield}
+raw_shield <- mitre.data$standards$shield
 ```
 
 ## CPE
@@ -139,14 +158,7 @@ __TODO__
 __TODO__
 
 ```{r ds_cpe}
-```
-
-
-## CVSS
-
-__TODO__
-
-```{r ds_cvss}
+raw_cpes <- mitre.data$standards$cpe
 ```
 
 
