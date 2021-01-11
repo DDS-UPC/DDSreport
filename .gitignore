@@ -3,3 +3,7 @@
 .Rdata
 .httr-oauth
 .DS_Store
+data/*.*
+data-raw/
+DDSreport_cache/
+DDSreport_files/
