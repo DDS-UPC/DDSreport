@@ -33,8 +33,6 @@ library(mitre)
 Como miembros del CADET (Cybersecurity Analyst Data Experts Team) se solicita 
 vuestra colaboración para el análisis de los incidentes que afectaron con anterioridad.
 
-![Especialidades individuales](images/cadet.png)
-
 
 ## Objetivo
 
@@ -55,11 +53,11 @@ Las siguientes preguntas suman 2 puntos, pudiendo conseguir un máximo de 10.
 # Data sets
 
 ```{r mitre_download_feeds, cache=TRUE, echo=FALSE, warning=FALSE, results='hide'}
-mitre::updateRawData(verbose = FALSE)
+# mitre::updateRawData(verbose = FALSE)
 ```
 
 ```{r mitre_create_datasets, cache=TRUE, echo=FALSE, warning=FALSE, results='hide'}
-mitre.data <- mitre::getMitreNetwork(verbose = F)
+# mitre.data <- mitre::getMitreNetwork(verbose = F)
 ```
 
 ## Incidentes
@@ -126,7 +124,7 @@ incidents %>%
 __TODO__
 
 ```{r ds_cve}
-raw_cves <- mitre.data$standards$cve
+# raw_cves <- mitre.data$standards$cve
 ```
 
 ## CWE
@@ -134,7 +132,7 @@ raw_cves <- mitre.data$standards$cve
 __TODO__
 
 ```{r ds_cwe}
-raw_cwes <- mitre.data$standards$cwe
+# raw_cwes <- mitre.data$standards$cwe
 ```
 
 ## ATT&CK
@@ -142,7 +140,7 @@ raw_cwes <- mitre.data$standards$cwe
 __TODO__
 
 ```{r ds_attck}
-raw_attck <- mitre.data$standards$attck
+# raw_attck <- mitre.data$standards$attck
 ```
 
 ## SHIELD
@@ -150,7 +148,7 @@ raw_attck <- mitre.data$standards$attck
 __TODO__
 
 ```{r ds_shield}
-raw_shield <- mitre.data$standards$shield
+# raw_shield <- mitre.data$standards$shield
 ```
 
 ## CPE
@@ -158,7 +156,7 @@ raw_shield <- mitre.data$standards$shield
 __TODO__
 
 ```{r ds_cpe}
-raw_cpes <- mitre.data$standards$cpe
+# raw_cpes <- mitre.data$standards$cpe
 ```
 
 
